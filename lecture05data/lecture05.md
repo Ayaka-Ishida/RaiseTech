@@ -9,7 +9,7 @@
 
 - MySQL設定
 - mysql --version ⇒MariaDB確認、削除してMySQLをインストール
-- # 以下を貼り付け
+- 以下を貼り付け
 - curl -fsSL https://raw.githubusercontent.com/MasatoshiMizumoto/raisetech_documents/main/aws/scripts/mysql_amazon_linux_2.sh | sh
 - mysql -u root -p RDSのエンドポイント
 - sudo yum install mysql-devel →railsでMySQLを利用するためのパッケージをインストール
