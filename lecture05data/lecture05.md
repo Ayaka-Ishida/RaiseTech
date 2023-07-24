@@ -1,6 +1,6 @@
 # 第5回課題
 1. 組み込みサーバーでの起動
-- ![組み込みサーバーでの動作確認](組み込みサーバーでの動作確認.png)
+- ![組み込みサーバーでの起動確認](組み込みサーバーでの起動確認.png)
 - docker system prune -a
 
 - EBSサイズ拡張　
@@ -36,8 +36,7 @@
 - bin/dev
 
 2. Nginxのインストール、Unicornでの起動
-- Nginx起動確認
-- ![nginx確認画面](nginx確認画面.png)
+- Nginx起動確認　![nginx確認画面](nginx確認画面.png)
 - Nginxインストール：sudo amazon-linux-extras install nginx1 -y
 - sudo systemctl start nginx.service
 - sudo systemctl status nginx.service
@@ -61,10 +60,8 @@
 - EC2のセキュリティグループは22ポートと、ALB用のセキュリティグループ設定を設定する。
 - ![EC2のセキュリティグループ設定変更](EC2のセキュリティグループ設定変更.png)
 - blocked hostはconfig/environments/development.rbにconfig.hosts.clearを追記。
-- 接続確認
-- ![DNS接続確認](DNS接続確認.png)
-- ヘルスチェック
-- ![ヘルスチェック](ヘルスチェック.png)
+- 接続確認 ![DNS接続確認](DNS接続確認.png)
+- ヘルスチェック ![ヘルスチェック](ヘルスチェック.png)
 
 4. S3作成
 - S3は画像保存先として利用。
