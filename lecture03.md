@@ -2,24 +2,24 @@
 1. APサーバーについて
 - APサーバーの名前：Puma　
 - Pumaのバージョン：5.6.5
-- ![puma](puma.png)
+- ![puma](lecture03data/puma.png)
 - Puma終了した場合：アクセスできない
-- ![APサーバー終了時](APサーバー終了時.png)
+- ![APサーバー終了時](lecture03data/APサーバー終了時.png)
 
 2. DBサーバーについて
 - DBサーバーの名前：MySQL
 - MySQLのバージョン：8.0.33
-- ![MySQL](MySQL.png)
+- ![MySQL](lecture03data/MySQL.png)
 - BDサーバー終了時：アクセスできない
-- ![DBサーバー終了時](DBサーバー終了時.png)
+- ![DBサーバー終了時](lecture03data/DBサーバー終了時.png)
 - 覚えておきたいコマンド：sudo service mysqld start、sudo service mysqld stop、sudo service mysqld status
 
 3. Railsの構成管理ツールの名前：Bundler
 - GemとBundlerについてはもう一度復習して理解を深めたい
 
 4. 通常時起動確認
-- ![起動確認1](起動確認1.png)
-- ![起動確認2](起動確認2.png)
+- ![起動確認1](lecture03data/起動確認1.png)
+- ![起動確認2](lecture03data/起動確認2.png)
 
 5. 学んだこと
 - rvmとBundlerのインストール

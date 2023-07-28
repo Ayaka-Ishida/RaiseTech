@@ -1,28 +1,28 @@
 # 第4回講義
 
 1. VPC、サブネット構築
-- ![VPC構築](VPC構築.png)
+- ![VPC構築](lecture04data/VPC構築.png)
 - CIDRブロックは後から増やせないため多めの見積もりをしておく
 - IP6とテナンシー（専用ハードウェアを使用するかどうか）はあまり使用しない
 - VPCエンドポイントを使用するとVPC外のサービスにインターネットではなくAWS内のネットワークで接続可能に（今回は設定なし）
 - DNSオプションあり（DNSホスト名を有効化・DNS解決を有効化…もう一度よく確認して理解を深める）
 
 2. EC2作成
-- ![EC2_1](EC2_1.png)
-- ![EC2_2](EC2_2.png)
-- ![EC2_3](EC2_3.png)
+- ![EC2_1](lecture04data/EC2_1.png)
+- ![EC2_2](lecture04data/EC2_2.png)
+- ![EC2_3](lecture04data/EC2_3.png)
 - セキュリティグループに、今自分がインターネットに接続しているIPアドレスを設定して対応。
 
 
 3. RDS作成
-- ![RDS_1](RDS_1.png)
-- ![RDS_2](RDS_2.png)
-- ![RDS_3](RDS_3.png)
+- ![RDS_1](lecture04data/RDS_1.png)
+- ![RDS_2](lecture04data/RDS_2.png)
+- ![RDS_3](lecture04data/RDS_3.png)
 - セキュリティグループにEC2のセキュリティグループを設定して対応。
 
 
 4. EC2からRDSへ接続
-- ![EC2からRDS接続](EC2からRDS接続.png)
+- ![EC2からRDS接続](lecture04data/EC2からRDS接続.png)
 - WindowsのPCを利用中のため、TeraTermから接続。MySQLのインストールと'mysql -u admin -p -h RDSのエンドポイント'のコマンドで接続。
 
 5. 今回学んだこと、感想など
