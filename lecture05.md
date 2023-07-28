@@ -1,6 +1,6 @@
 # 第5回課題
 1. 組み込みサーバーでの起動
-- ![組み込みサーバーでの動作確認](組み込みサーバーでの動作確認.png)
+- ![組み込みサーバーでの動作確認](lecture05data/組み込みサーバーでの動作確認.png)
 - docker system prune -a
 
 - EBSサイズ拡張　
@@ -36,7 +36,7 @@
 - bin/dev
 
 2. Nginxのインストール、Unicornでの起動
-- Nginx起動確認　![nginx確認画面](nginx確認画面.png)
+- Nginx起動確認　![nginx確認画面](lecture05data/nginx確認画面.png)
 - Nginxインストール：sudo amazon-linux-extras install nginx1 -y
 - sudo systemctl start nginx.service
 - sudo systemctl status nginx.service
@@ -49,37 +49,37 @@
 - sudo vi /etc/nginx/nginx.confでunicorn接続に必要な情報を追加
 - bundle exec unicorn_rails -E development -c config/unicorn.rb -D
 - sudo systemctl start nginx.service
-- ![NginxとUnicornでの動作確認](NginxとUnicornでの動作確認.png)
+- ![NginxとUnicornでの動作確認](lecture05data/NginxとUnicornでの動作確認.png)
 - 止めるときはps aux | grep unicornで調べた番号をkill -9
 
 3. ALB作成
 - ターゲットグループの設定　AZを指定
 - http 80ポートを指定
 - ALB用のセキュリティグループを作成。80ポートに自分のIPアドレスを指定。
-- ![ALB用セキュリティグループ設定](ALB用セキュリティグループ設定.png)
+- ![ALB用セキュリティグループ設定](lecture05data/ALB用セキュリティグループ設定.png)
 - EC2のセキュリティグループは22ポートと、ALB用のセキュリティグループ設定を設定する。
-- ![EC2のセキュリティグループ設定変更](EC2のセキュリティグループ設定変更.png)
+- ![EC2のセキュリティグループ設定変更](lecture05data/EC2のセキュリティグループ設定変更.png)
 - blocked hostはconfig/environments/development.rbにconfig.hosts.clearを追記。
-- 接続確認 ![DNS接続確認](DNS接続確認.png)
-- ヘルスチェック ![ヘルスチェック](ヘルスチェック.png)
+- 接続確認 ![DNS接続確認](lecture05data/DNS接続確認.png)
+- ヘルスチェック ![ヘルスチェック](lecture05data/ヘルスチェック.png)
 
 4. S3作成
 - S3は画像保存先として利用。
 - S3接続の前にアプリで画像が表示されていないことに気づいてimagemagickのインストールへ。
 - 参考URL（途中まで参考にしてインストール）[Amazon Linux 2 に ImageMagick 7 をインストールする(PHP)](https://qiita.com/qwe001/items/110bc0a12d56052aeb01)
-- インストール後、無事に画像表示できた。 ![imagemagickインストール後](imagemagickインストール後.png)
+- インストール後、無事に画像表示できた。 ![imagemagickインストール後](lecture05data/imagemagickインストール後.png)
 - S3、S3にアクセスできるIAMロール、VPCエンドポイントを作成。
 - EC2にIAMロールをアタッチ。バケットポリシーの設定に手間取ったものの、なんとかEC2とS3の接続完了！
-- ![EC2-role](EC2-role.png)
-- ![role](role.png)
-- ![S3画面](S3画面.png)
-- ![S3接続後](S3接続後.png)
-- ![S3保存後](S3保存後.png)
+- ![EC2-role](lecture05data/EC2-role.png)
+- ![role](lecture05data/role.png)
+- ![S3画面](lecture05data/S3画面.png)
+- ![S3接続後](lecture05data/S3接続後.png)
+- ![S3保存後](lecture05data/S3保存後.png)
 - 参考にしたサイト1[AWS EC2からS3へアクセス(EC2にロールをセット)](https://itsakura.com/aws-ec2-s3-role)
 - 参考にしたサイト2[【AWS初心者】EC2からS3にある特定のバケットにアクセスするIAM roleを作成する](https://qiita.com/komazawa/items/988c346274666023d9dd)
 
 5. 構成図作成
-- ![構成図.drawio](構成図.drawio.png)
+- ![構成図.drawio](lecture05data/構成図.drawio.png)
 
 6. 今回の感想
 - セキュリティグループ設定、バケットポリシー設定の理解に時間がかかってしまい、なかなか接続できなかった。
