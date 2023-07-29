@@ -21,8 +21,8 @@
 ![確認メール](lecture06data/確認メール.png)
 ![購読完了](lecture06data/購読完了.png)
 ![アクション内容](lecture06data/アクション内容.png)
-![アラーム通知](lecture06data/アラーム通知.png)
-![OK通知](lecture06data/OK通知.png)
+![アラーム通知受信](lecture06data/アラーム通知受信.png)
+![OK通知受信](lecture06data/OK通知受信.png)
 - なかなか通知メールが来ず、アプリに接続できる状態と接続できない状態とを切り替えることでメール受信完了。
 - healthyとunhealthyの判定には結構時間がかかる模様。気長に待つのがよさそう。
 
