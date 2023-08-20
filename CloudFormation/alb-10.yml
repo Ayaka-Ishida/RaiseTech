@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description:  ALB create
+
+# ------------------------------------------------------------#
+#  ALB
+# ------------------------------------------------------------#
+# ALB Create
+Resources:
+  LoadBalancerVPC10:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: ALB-vpc10
+      Scheme: internet-facing
+      Type: application
+      Subnets: 
+      - !ImportValue PublicSubnet1vpc10
+      - !ImportValue PublicSubnet2vpc10
+      SecurityGroups: 
+      - !ImportValue ALBSecurityGroup
+      IpAddressType: ipv4
+      Tags:
+      - Key: Name
+        Value: ALB-vpc10
+
+# ------------------------------------------------------------#
+# target Group
+# ------------------------------------------------------------#
+# target Group Create
+  TargetGroupvpc10:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: TargetGroup-vpc10
+      VpcId: !ImportValue VPC10
+      IpAddressType: ipv4
+      Port: 80
+      Protocol: HTTP
+      TargetType: instance
+      Targets:
+        - Id: !ImportValue EC2vpc10
+      HealthCheckEnabled: true
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: '/'
+      HealthCheckPort: 'traffic-port'
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 3
+      UnhealthyThresholdCount: 5
+      Matcher:
+        HttpCode: '200'
+      Tags: 
+        - Key: Name
+          Value: TargetGroup-vpc10
+
+# ------------------------------------------------------------#
+# listener
+# ------------------------------------------------------------#
+# listener Create
+
+  ListenerResourcevpc10:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancerVPC10
+      Port: 80
+      Protocol: "HTTP"
+      DefaultActions: 
+      - 
+        TargetGroupArn: !Ref TargetGroupvpc10
+        Type: "forward"
+
+Outputs:
+  ALBOutput:
+    Value: !GetAtt LoadBalancerVPC10.DNSName
+    Export:
+      Name: LoadBalancerDNSNameVPC10

@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: 3S-Acsesslole create
+
+Resources:
+  S3AccessRolevpc10:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "ec2.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Path: "/"
+    
+  S3AccessPolicies:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: s3access-vpc10
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+            - "s3:ListAllMyBuckets"
+            - "s3:GetBucketLocation"
+          Resource: "arn:aws:s3:::*"
+        - Effect: Allow
+          Action: "*"
+          Resource:
+            - "arn:aws:s3:::vpc10s3bucket2023"
+            - "arn:aws:s3:::vpc10s3bucket2023/*"
+      Roles:
+      - !Ref S3AccessRolevpc10
+            
+  S3AccessInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+      - !Ref S3AccessRolevpc10
+
+Outputs:
+  S3AccessRolevpc10:
+    Value: !Ref S3AccessRolevpc10
+    Export:
+      Name: S3AccessRolevpc10
+
+  S3AccessPolicies:
+    Value: !Ref S3AccessPolicies
+    Export:
+      Name: S3AccessPolicies
+  
+  S3AccessInstanceProfile:
+    Value: !Ref S3AccessInstanceProfile
+    Export:
+      Name: S3AccessInstanceProfile
