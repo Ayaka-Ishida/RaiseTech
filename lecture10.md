@@ -4,7 +4,7 @@
 * CloudFormationを作成するにあたり、VScodeをインストールして対応。
 - VScodeも奥が深そうなので、使いこなせるように色々調べていきたい。
 - CloudFomation作業用におすすめされていたVScodeの拡張機能であるYAMLとCloudFormation Linterをインストール。
-- 作成時に!Refに関するエラーが沢山出るが、どうやらYAMLで略記が対応していないためのようであり問題ない様子。
+- 作成時に!Refなどに対しエラーが出るものの、追加設定すると対応できる模様。[VSCodeでAWS CloudFormation をYAMLで書くための個人的ベスト設定](https://qiita.com/yoskeoka/items/6528571a45cd69f93deb)
 - 参考資料1 [CloudFormation の参照周りで意識すべきポイント・Tips](https://dev.classmethod.jp/articles/cloudformation-tips-focused-on-refs/)
 - 参考資料2 [CloudFormationテンプレート間で値を渡す3つの方法](https://qiita.com/tiibun/items/67aa74cdc17bc0b9812c)
 - 参考資料3[CloudFormationを学びたい方へ 個人的学習法・テンプレート書き方まとめ](https://qiita.com/takeITeasy7/items/11cb9bf4dccaaf0d66b2)

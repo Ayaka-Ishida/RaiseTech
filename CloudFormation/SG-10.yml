@@ -3,6 +3,11 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: 
   Security Group create
 
+Parameters:
+  MyIP:
+    Description: IP address allowed to access EC2
+    Type: String
+
 # ------------------------------------------------------------#
 # ALB Security Group
 # ------------------------------------------------------------#
@@ -19,7 +24,7 @@ Resources:
           IpProtocol: tcp
           FromPort: 80
           ToPort: 80
-          CidrIp: #MyIP
+          CidrIp: !Ref MyIP
           
 # ------------------------------------------------------------#
 # EC2 Security Group
@@ -35,7 +40,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: #MyIP
+          CidrIp: !Ref MyIP
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
