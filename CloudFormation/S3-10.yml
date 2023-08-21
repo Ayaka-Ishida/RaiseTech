@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: S3 bucket create
+
+Resources:
+  S3Bucketvpc10:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: vpc10s3bucket2023
+      Tags:
+      - Key: Purpose
+        Value: Bucket-vpc10
+
+Outputs:
+  S3Bucketvpc10:
+    Description: S3 Bucket
+    Value: !Ref S3Bucketvpc10
+    Export:
+      Name: S3Bucketvpc10

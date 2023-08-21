@@ -1,0 +1,85 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: 
+  Security Group create
+
+Parameters:
+  MyIP:
+    Description: IP address allowed to access EC2
+    Type: String
+
+# ------------------------------------------------------------#
+# ALB Security Group
+# ------------------------------------------------------------#
+# ALB Security Group Create
+Resources:
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: vpc10-ALB-sg
+      GroupDescription: ALB-sg
+      VpcId: !ImportValue VPC10
+      SecurityGroupIngress:
+        - 
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: !Ref MyIP
+          
+# ------------------------------------------------------------#
+# EC2 Security Group
+# ------------------------------------------------------------#
+# EC2 Security Group Create
+  EC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: vpc10-EC2-sg
+      GroupDescription: EC2-sg
+      VpcId: !ImportValue VPC10
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref MyIP
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref ALBSecurityGroup
+
+# ------------------------------------------------------------#
+# RDS Security Group
+# ------------------------------------------------------------#
+# RDS Security Group Create
+  RDSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: vpc10-RDS-sg
+      GroupDescription: RDS-sg
+      VpcId: !ImportValue VPC10
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref EC2SecurityGroup
+
+#========================================================#
+#Outputs
+#========================================================#
+Outputs:
+  EC2SecurityGroup:
+    Description: Security Group ID for the EC2 instances
+    Value: !Ref EC2SecurityGroup
+    Export:
+      Name: EC2SecurityGroup
+
+  RDSSecurityGroup:
+    Description: Security Group ID for the RDS instances
+    Value: !Ref RDSSecurityGroup
+    Export:
+      Name: RDSSecurityGroup
+
+  ALBSecurityGroup:
+    Description: Security Group ID for the ALB
+    Value: !Ref ALBSecurityGroup
+    Export:
+      Name: ALBSecurityGroup

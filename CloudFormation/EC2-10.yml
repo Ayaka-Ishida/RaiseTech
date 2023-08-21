@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: EC2 create
+# ------------------------------------------------------------#
+#  EC2
+# ------------------------------------------------------------#
+# EC2 Create
+
+Parameters:
+  EC2ImageId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+  InstanceTypeParameter:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.large
+    Description: Enter t2.micro, m1.small, or m1.large. Default is t2.micro.
+
+Resources:
+  NewKeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: KeyPair-EC2VPC10
+
+  EC2vpc10: 
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: ap-northeast-1a
+      ImageId: !Ref EC2ImageId
+      InstanceType: t2.micro
+      DisableApiTermination: false
+      Monitoring: false
+      KeyName: !Ref NewKeyPair
+      IamInstanceProfile: !ImportValue S3AccessInstanceProfile
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          SubnetId: !ImportValue PublicSubnet1vpc10
+          GroupSet:
+            - !ImportValue EC2SecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeType: gp2
+            DeleteOnTermination: true
+            VolumeSize: 16
+
+  ElasticIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+
+  ElasticIPAssociate:
+    Type: AWS::EC2::EIPAssociation
+    Properties: 
+      InstanceId: !Ref EC2vpc10
+      EIP: !Ref ElasticIP
+
+Outputs:
+  EC2VPC10:
+    Value: !Ref EC2vpc10
+    Export:
+      Name: EC2vpc10

@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description:
+  RDS for  MySQL Create
+
+Resources:
+  rdsDBSubnetGroupvpc10:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for RDS instance
+      SubnetIds:
+        - !ImportValue PrivateSubnet1vpc10
+        - !ImportValue PrivateSubnet2vpc10
+      Tags:
+        - Key: Name
+          Value: rdsDBSubnetGroupvpc10
+
+  MyRDSSecret:
+    Type: "AWS::SecretsManager::Secret"
+    Properties:
+      Description: "This is a Secrets Manager secret for an RDS DB instance"
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "admin"}'
+        GenerateStringKey: "password"
+        PasswordLength: 16
+        ExcludeCharacters: '"@/\'
+
+  RDSvpc10mysql:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: RDS-mysql-vpc-10
+      Engine: MySQL
+      DBInstanceClass: db.t3.micro
+      MasterUsername: !Join ['', ['{{resolve:secretsmanager:', !Ref MyRDSSecret, ':SecretString:username}}' ]]
+      MasterUserPassword: !Join ['', ['{{resolve:secretsmanager:', !Ref MyRDSSecret, ':SecretString:password}}' ]]
+      VPCSecurityGroups:
+        - !ImportValue RDSSecurityGroup
+      Port: 3306
+      DBName: RDSvpc10mysql
+      AvailabilityZone: ap-northeast-1a
+      DBSubnetGroupName: !Ref rdsDBSubnetGroupvpc10
+      AllocatedStorage: 20
+
+  SecretRDSInstanceAttachment:
+    Type: "AWS::SecretsManager::SecretTargetAttachment"
+    Properties:
+      SecretId: !Ref MyRDSSecret
+      TargetId: !Ref RDSvpc10mysql
+      TargetType: AWS::RDS::DBInstance
+
+Outputs:
+  DBInstanceEndpointvpc10:
+    Description: Endpoint of the DB instance
+    Value: !GetAtt RDSvpc10mysql.Endpoint.Address
+    Export:
+      Name: DBInstanceEndpointvpc10
