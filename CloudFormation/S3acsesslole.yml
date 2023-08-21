@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 
-Description: 3S-Accesslole create
+Description: S3-Accesslole create
 
 Resources:
   S3AccessRolevpc10:
